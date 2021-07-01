@@ -12,13 +12,9 @@ namespace Dell_And_Compress
         static void Main()
         {
 
-            var OriginalPath = new DirectoryInfo(@"C:\temp\Folder");
+           
 
-            Zip_File(OriginalPath.ToString());
 
-            Delete_OldFile(OriginalPath);
-
-            Console.ReadKey();
         }
 
 
@@ -42,5 +38,6 @@ namespace Dell_And_Compress
             File.Delete(frist_File.ToString());
 
         }
+
     }
 }
