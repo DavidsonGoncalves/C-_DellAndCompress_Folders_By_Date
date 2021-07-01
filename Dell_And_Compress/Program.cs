@@ -1,12 +1,46 @@
 ﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.IO.Compression;
+using System.Linq;
+
 
 namespace Dell_And_Compress
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello World!");
+
+            var OriginalPath = new DirectoryInfo(@"C:\temp\Folder");
+
+            Zip_File(OriginalPath.ToString());
+
+            Delete_OldFile(OriginalPath);
+
+            Console.ReadKey();
+        }
+
+
+        public static void Zip_File(string path)
+        {
+            IEnumerable<string> folder = Directory.GetDirectories(path);
+
+            string lastFolder = folder.Last().ToString();
+
+            ZipFile.CreateFromDirectory(lastFolder, lastFolder + ".zip", CompressionLevel.Optimal, true);
+            Directory.Delete(lastFolder, true);
+
+        }
+
+        public static void Delete_OldFile(DirectoryInfo path)
+        {
+            var files = path.GetFiles();
+            var Files_Order = files.OrderBy(x => x.CreationTime);
+            var frist_File = Files_Order.First();
+
+            File.Delete(frist_File.ToString());
+
         }
     }
 }
