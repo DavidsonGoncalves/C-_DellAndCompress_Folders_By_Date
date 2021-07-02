@@ -12,10 +12,24 @@ namespace Dell_And_Compress
         static void Main()
         {
             var OriginalPath = new DirectoryInfo(@"D:\!Documents\Projects\Project DeleteFolders\Folder");
+            try
+            {
+                Zip_File(OriginalPath.ToString());
 
-            Zip_File(OriginalPath.ToString());
-
-            Delete_OldFile(OriginalPath);
+                Delete_OldFile(OriginalPath);
+            }
+            catch (System.IO.DirectoryNotFoundException e)
+            {
+                Log_Write($"[{DateTime.Now.ToString()}] - ERROR!! " + e.Message);
+            }
+            catch (System.InvalidOperationException e)
+            {
+                Log_Write($"[{DateTime.Now.ToString()}] - ERROR!! {e.Message} to compress!");
+            }
+            catch (Exception e)
+            {
+                Log_Write($"[{DateTime.Now.ToString()}] - UNEXPETED ERROR!! {e.Message}");
+            }
 
         }
 
